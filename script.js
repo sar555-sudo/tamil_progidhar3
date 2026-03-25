@@ -42,7 +42,7 @@ filterButtons.forEach((btn) => {
 
 // Pooja detail data (Tamil descriptions)
 const poojaDetails = {
-  ganapathi: {
+  naming: {
     title: "தொட்டிலிட்டு குழந்தைக்கு பெயரிடல்",
     subtitle: "தொடக்க வெற்றி, எல்லா திசைகளிலும் காப்பு",
     imageClass: "pooja-img-ganapathi",
@@ -689,3 +689,42 @@ if (yearSpan) {
   yearSpan.textContent = new Date().getFullYear();
 }
 
+
+document.addEventListener('submit', async (e) => {
+    // Check if the form being submitted is the correct one
+    if (e.target && e.target.classList.contains('enquiry-form')) {
+        e.preventDefault();
+        
+        const form = e.target;
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        // FORCE VALUE GRAB: This manually maps the inputs to be sure
+        const data = {
+            name: form.querySelector('[name="name"]')?.value || '',
+            phone: form.querySelector('[name="phone"]')?.value || '',
+            city: form.querySelector('[name="city"]')?.value || '',
+            date: form.querySelector('[name="date"]')?.value || '',
+            poojaType: form.querySelector('[name="poojaType"]')?.value || '',
+            message: form.querySelector('[name="message"]')?.value || ''
+        };
+
+        console.log("Verified Data:", data);
+
+        
+
+        try {
+            const response = await fetch('http://localhost:3000/submit-enquiry', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                document.getElementById('formSuccess').hidden = false;
+                form.reset();
+            }
+        } catch (error) {
+            alert("Server is not running!");
+        }
+    }
+});

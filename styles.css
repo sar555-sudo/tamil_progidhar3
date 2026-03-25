@@ -310,7 +310,7 @@ button {
 .hero-highlight {
   font-weight: 800;
   letter-spacing: 0.01em;
-  background: linear-gradient(90deg, #fef9c3, #f97316, #facc15);
+  background: linear-gradient(90deg, #f4e003, #f97316, #fa2815);
   -webkit-background-clip: text;
   color: transparent;
 }
@@ -398,7 +398,11 @@ button {
   animation: floatCard 8s ease-in-out infinite;
 }
 
+
 .priest-photo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
   position: relative;
   border-radius: 18px;
   overflow: hidden;
@@ -408,10 +412,89 @@ button {
       to bottom,
       rgba(248, 250, 252, 0.3),
       rgba(15, 23, 42, 0.55)
-    ),
-    url("https://images.pexels.com/photos/13057014/pexels-photo-13057014.jpeg?auto=compress&cs=tinysrgb&w=800");
+    );
   background-size: cover;
   background-position: center;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 0 4vw;
+  }
+  .site-header {
+    padding: 18px 3vw 40px;
+  }
+  .nav-container {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .logo {
+    height: 60px;
+    width: 60px;
+  }
+  .main-nav {
+    gap: 12px;
+    font-size: 1rem;
+  }
+  .hero-main-card {
+    padding: 8px 4px 12px;
+  }
+  .priest-photo {
+    height: 140px;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    padding: 12px 2vw 24px;
+  }
+  .nav-container {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .logo {
+    height: 44px;
+    width: 44px;
+  }
+  .main-nav {
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.98rem;
+  }
+  .hero {
+    gap: 14px;
+    padding: 0 2vw;
+  }
+  .hero-content {
+    max-width: 100%;
+  }
+  .hero-main-card {
+    padding: 4px 2px 8px;
+  }
+  .priest-photo {
+    height: 90px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .trust-item {
+    min-width: 80px;
+    padding: 6px 8px;
+    font-size: 0.8rem;
+  }
+}
+
+
+}
+.priest-photo img {
+  width: 100%;
+  height: 90%;
+  object-fit: absolute;
+  display: block;
 }
 
 .priest-badge {
@@ -580,20 +663,31 @@ button {
 }
 
 .pooja-img-ganapathi {
-  background-image: url("https://images.pexels.com/photos/17390126/pexels-photo-17390126/free-photo-of-hindu-god-ganesha.jpeg?auto=compress&cs=tinysrgb&w=800");
+  background-image: url(naming.jpg);
+ 
 }
 
 .pooja-img-gruhapravesam {
-  background-image: url("https://images.pexels.com/photos/13057014/pexels-photo-13057014.jpeg?auto=compress&cs=tinysrgb&w=800");
+  background-image: url(food.png);
 }
 
-.pooja-img-navagraha {
-  background-image: url("https://images.pexels.com/photos/15990015/pexels-photo-15990015/free-photo-of-durga-statue.jpeg?auto=compress&cs=tinysrgb&w=800");
+.pooja-img-manjal {
+  background-image: url(manjal.png)
 }
 
 .pooja-img-lakshmi {
+  background-image: url(ear_hair.png)
+}
+.pooja-img-lakshm {
   background-image: url("https://images.pexels.com/photos/1457812/pexels-photo-1457812.jpeg?auto=compress&cs=tinysrgb&w=800");
 }
+
+
+.pooja-img-muhurtham {
+  background-image: url(ezhuthu.jpg)
+}
+
+
 
 .pooja-image::before {
   content: "";
@@ -601,8 +695,7 @@ button {
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(248, 250, 252, 0.1),
-    rgba(15, 23, 42, 0.65)
+    
   );
 }
 
@@ -874,9 +967,9 @@ button {
 }
 
 .form-success {
-  margin-top: 10px;
+  margin-top: 33px;
   font-size: 0.86rem;
-  color: #bbf7d0;
+  color: #038932;
 }
 
 .enquiry-side {
