@@ -650,8 +650,8 @@ document.querySelectorAll(".quick-call").forEach((btn) => {
     const messageField = document.getElementById("message");
     if (messageField && !messageField.value) {
       messageField.value = poojaName
-        ? `இந்த "${poojaName}" பூஜை பற்றி மேலும் அறிந்து ஆலோசனை பேச வேண்டும்.`
-        : "பூஜை பற்றிய இலவச ஆலோசனை பேச வேண்டும்.";
+        ? `இந்த "${poojaName}" வழிபாடு பற்றி மேலும் அறிந்து ஆலோசனை பேச வேண்டும்.`
+        : "வழிபாடுகள் பற்றிய இலவச ஆலோசனை பேச வேண்டும்.";
     }
   });
 });
