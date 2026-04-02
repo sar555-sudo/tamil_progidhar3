@@ -657,11 +657,15 @@ document.querySelectorAll(".quick-call").forEach((btn) => {
 });
 
 // Enquiry form: simple front-end validation & thank-you message
+// Enquiry form: Google Sheets Submit Logic & Validation
 const formSuccess = document.getElementById("formSuccess");
+// REPLACE THIS URL with your own Google Apps Script Web App URL
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyVpvNs5mNJI7lAaVz7LBLbvPFWV_tPoERInpYDMdPfPBjOiCJcbmvFyaEKJ_hDX5AApA/exec';
 
 if (enquiryForm) {
   enquiryForm.addEventListener("submit", (e) => {
     e.preventDefault();
+
     const name = enquiryForm.name.value.trim();
     const phone = enquiryForm.phone.value.trim();
     const city = enquiryForm.city.value.trim();
@@ -671,15 +675,36 @@ if (enquiryForm) {
       return;
     }
 
-    if (formSuccess) {
-      formSuccess.hidden = false;
-    }
+    const btn = enquiryForm.querySelector('button[type="submit"]');
+    const originalBtnText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> சமர்ப்பிக்கப்படுகிறது...";
 
-    enquiryForm.reset();
-
-    if (poojaTypeSelect) {
-      poojaTypeSelect.value = "";
-    }
+    fetch(scriptURL, { 
+      method: 'POST', 
+      body: new FormData(enquiryForm)
+    })
+    .then(response => {
+      btn.innerHTML = originalBtnText;
+      btn.disabled = false;
+      
+      if (formSuccess) {
+        formSuccess.hidden = false;
+        // Hide success message after 5 seconds
+        setTimeout(() => { formSuccess.hidden = true; }, 5000);
+      }
+      enquiryForm.reset();
+      
+      if (poojaTypeSelect) {
+        poojaTypeSelect.value = "";
+      }
+    })
+    .catch(error => {
+      console.error('Error!', error.message);
+      alert("கணினி பிழை. தயவுசெய்து மீண்டும் முயற்சிக்கவும் அல்லது நேரடியாக அழைக்கவும்.");
+      btn.innerHTML = originalBtnText;
+      btn.disabled = false;
+    });
   });
 }
 
@@ -689,42 +714,605 @@ if (yearSpan) {
   yearSpan.textContent = new Date().getFullYear();
 }
 
+// ================================================================
+//  AUSPICIOUS DATES CONFIGURATION — EASILY EDITABLE!
+//  Add/remove dates below. Format: 'YYYY-MM-DD'
+//  type: 'good' = green dot (நல்ல நாள்)
+//  type: 'avoid' = red dot (தவிர்க்கவும்)
+// ================================================================
+const SPECIAL_DATES = {
+  '2026-04-09': { type: 'good', label: 'உத்திரம் — நல்ல நாள்' },
+  '2026-04-14': { type: 'good', label: 'புத்தாண்டு — நல்ல நாள்' },
+  '2026-04-20': { type: 'good', label: 'பூரம் — நல்ல நாள்' },
+  '2026-04-29': { type: 'avoid', label: 'அமாவாசை — தவிர்க்கவும்' },
+  '2026-05-05': { type: 'good', label: 'சுவாதி — நல்ல நாள்' },
+  '2026-05-13': { type: 'good', label: 'பூரட்டாதி — நல்ல நாள்' },
+  '2026-05-28': { type: 'avoid', label: 'அமாவாசை — தவிர்க்கவும்' },
+  '2026-06-08': { type: 'good', label: 'உத்திரம் — நல்ல நாள்' },
+  '2026-06-27': { type: 'avoid', label: 'அமாவாசை — தவிர்க்கவும்' },
+  // ➕ Add more dates here in the same format
+};
 
-document.addEventListener('submit', async (e) => {
-    // Check if the form being submitted is the correct one
-    if (e.target && e.target.classList.contains('enquiry-form')) {
-        e.preventDefault();
-        
-        const form = e.target;
-        const submitBtn = form.querySelector('button[type="submit"]');
+// ================================================================
+//  POOJA LIST FOR BOOKING
+// ================================================================
+const BOOKING_POOJAS = [
+  { id: 'naming', name: 'தொட்டிலிட்டு குழந்தைக்கு பெயரிடல்', icon: '👶' },
+  { id: 'gruhapravesam', name: 'மகவுக்கு உணவுட்டல்', icon: '🍚' },
+  { id: 'navagraha', name: 'வாழ்நாள் வேள்வி', icon: '🔥' },
+  { id: 'lakshmi', name: 'குருத்து முடி & காதணி விழா', icon: '✂️' },
+  { id: 'muhurtham', name: 'எழுத்தறிவித்தல்', icon: '📖' },
+  { id: 'businessStart', name: 'மஞ்சள் நீராட்டு சடங்கு', icon: '🌼' },
+  { id: 'consultation', name: 'தீட்டு கழித்தல் (புண்யாதனம்)', icon: '🙏' },
+  { id: 'shopopening', name: 'கடைதிறப்பு', icon: '🏪' },
+  { id: 'premarriage', name: 'திருமண உறுதி (நிச்சயதார்த்தம்)', icon: '💍' },
+  { id: 'premarriage0', name: 'பந்தக்கால்', icon: '🎋' },
+  { id: 'premarriage1', name: 'தமிழ்நெறி திருமணம்', icon: '💒' },
+  { id: 'valaikapu', name: 'வளைகாப்பு', icon: '🤰' },
+  { id: 'bhoomi', name: 'கால்கோள் விழா / பூமி பூசை', icon: '🏗️' },
+  { id: 'house', name: 'தமிழ்நெறி புதுமனை புகுவிழா', icon: '🏠' },
+  { id: 'vizha', name: 'மணி / பவள / முத்து விழா', icon: '🎊' },
+  { id: 'sadangu', name: 'நீத்தார் நிறைவு சடங்கு', icon: '🪔' },
+  { id: 'pura', name: 'சடலப் புறப்பாடு', icon: '🕯️' },
+  { id: 'paal', name: 'பால் தெளித்தல்', icon: '🥛' },
+];
 
-        // FORCE VALUE GRAB: This manually maps the inputs to be sure
-        const data = {
-            name: form.querySelector('[name="name"]')?.value || '',
-            phone: form.querySelector('[name="phone"]')?.value || '',
-            city: form.querySelector('[name="city"]')?.value || '',
-            date: form.querySelector('[name="date"]')?.value || '',
-            poojaType: form.querySelector('[name="poojaType"]')?.value || '',
-            message: form.querySelector('[name="message"]')?.value || ''
-        };
+// ================================================================
+//  BOOKING WIZARD
+// ================================================================
+const bookingModal = document.getElementById('bookingModal');
+const bookingCloseBtn = document.getElementById('bookingCloseBtn');
+const bookingBackBtn = document.getElementById('bookingBackBtn');
+const bookingNextBtn = document.getElementById('bookingNextBtn');
+const bookingNav = document.getElementById('bookingNav');
+const openBookingBtn = document.getElementById('openBookingBtn');
 
-        console.log("Verified Data:", data);
+let currentStep = 1;
+let bookingData = { pooja: null, poojaName: '', name: '', phone: '', city: '', date: '', time: '', notes: '' };
 
-        
+// Populate pooja selection grid
+const poojaSelectGrid = document.getElementById('poojaSelectGrid');
+if (poojaSelectGrid) {
+  BOOKING_POOJAS.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'pooja-select-card';
+    card.dataset.poojaId = p.id;
+    card.innerHTML = `<div class="pooja-select-icon">${p.icon}</div><span>${p.name}</span>`;
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.pooja-select-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      bookingData.pooja = p.id;
+      bookingData.poojaName = p.name;
+    });
+    poojaSelectGrid.appendChild(card);
+  });
+}
 
-        try {
-            const response = await fetch('http://localhost:3000/submit-enquiry', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
+function openBookingModal(preselectedPoojaId) {
+  currentStep = 1;
+  bookingData = { pooja: null, poojaName: '', name: '', phone: '', city: '', date: '', time: '', notes: '' };
+  // Reset UI
+  document.querySelectorAll('.pooja-select-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('bookingName').value = '';
+  document.getElementById('bookingPhone').value = '';
+  document.getElementById('bookingCity').value = '';
+  document.getElementById('bookingNotes').value = '';
+  document.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.cal-day').forEach(d => d.classList.remove('selected'));
 
-            if (response.ok) {
-                document.getElementById('formSuccess').hidden = false;
-                form.reset();
-            }
-        } catch (error) {
-            alert("Server is not running!");
-        }
+  if (preselectedPoojaId) {
+    const card = poojaSelectGrid?.querySelector(`[data-pooja-id="${preselectedPoojaId}"]`);
+    if (card) {
+      card.classList.add('selected');
+      const p = BOOKING_POOJAS.find(x => x.id === preselectedPoojaId);
+      if (p) { bookingData.pooja = p.id; bookingData.poojaName = p.name; }
     }
+  }
+
+  updateStepUI();
+  bookingModal.classList.add('active');
+  bookingModal.setAttribute('aria-hidden', 'false');
+  document.getElementById('bookingSuccess').style.display = 'none';
+}
+
+function closeBookingModal() {
+  bookingModal.classList.remove('active');
+  bookingModal.setAttribute('aria-hidden', 'true');
+}
+
+if (openBookingBtn) openBookingBtn.addEventListener('click', () => openBookingModal(null));
+if (bookingCloseBtn) bookingCloseBtn.addEventListener('click', closeBookingModal);
+bookingModal?.addEventListener('click', e => { if (e.target === bookingModal) closeBookingModal(); });
+
+function updateStepUI() {
+  // Show/hide steps
+  for (let i = 1; i <= 4; i++) {
+    const step = document.getElementById(`bookingStep${i}`);
+    if (step) step.classList.toggle('active', i === currentStep);
+  }
+  // Progress indicator
+  document.querySelectorAll('.progress-step').forEach(el => {
+    const s = parseInt(el.dataset.step);
+    el.classList.remove('active', 'completed');
+    if (s === currentStep) el.classList.add('active');
+    else if (s < currentStep) el.classList.add('completed');
+  });
+  document.querySelectorAll('.progress-line').forEach((line, idx) => {
+    line.classList.toggle('filled', idx < currentStep - 1);
+  });
+  // Nav buttons
+  bookingBackBtn.style.display = currentStep > 1 ? '' : 'none';
+  if (currentStep === 4) {
+    bookingNextBtn.innerHTML = '<i class="fas fa-check"></i> உறுதிப்படுத்தி முன்பதிவு செய்க';
+  } else {
+    bookingNextBtn.innerHTML = 'அடுத்த படி <i class="fas fa-arrow-right"></i>';
+  }
+  bookingNav.style.display = '';
+}
+
+function validateStep(step) {
+  if (step === 1) {
+    if (!bookingData.pooja) { alert('தயவுசெய்து ஒரு வழிபாட்டை தேர்வு செய்யுங்கள்.'); return false; }
+  } else if (step === 2) {
+    bookingData.name = document.getElementById('bookingName').value.trim();
+    bookingData.phone = document.getElementById('bookingPhone').value.trim();
+    bookingData.city = document.getElementById('bookingCity').value.trim();
+    if (!bookingData.name) { alert('தயவுசெய்து உங்கள் பெயரை உள்ளிடுங்கள்.'); return false; }
+    if (!bookingData.phone) { alert('தயவுசெய்து தொலைபேசி எண்ணை உள்ளிடுங்கள்.'); return false; }
+    if (!bookingData.city) { alert('தயவுசெய்து இடம் / பகுதியை உள்ளிடுங்கள்.'); return false; }
+  } else if (step === 3) {
+    bookingData.notes = document.getElementById('bookingNotes').value.trim();
+    // Date and time are optional
+  }
+  return true;
+}
+
+function generateBookingSummary() {
+  const card = document.getElementById('bookingSummaryCard');
+  if (!card) return;
+  card.innerHTML = `
+    <div class="summary-header">
+      <h4>🔱 தமிழ் புரோகிதர் — வழிபாடு முன்பதிவு</h4>
+      <p>கீழ்க்கண்ட விவரங்கள் சரியா என உறுதிப்படுத்துங்கள்</p>
+    </div>
+    <div class="summary-row"><i class="fas fa-om"></i><span class="summary-label">வழிபாடு:</span><span class="summary-value">${bookingData.poojaName}</span></div>
+    <div class="summary-row"><i class="fas fa-user"></i><span class="summary-label">பெயர்:</span><span class="summary-value">${bookingData.name}</span></div>
+    <div class="summary-row"><i class="fas fa-phone"></i><span class="summary-label">தொலைபேசி:</span><span class="summary-value">${bookingData.phone}</span></div>
+    <div class="summary-row"><i class="fas fa-map-marker-alt"></i><span class="summary-label">இடம்:</span><span class="summary-value">${bookingData.city}</span></div>
+    <div class="summary-row"><i class="fas fa-calendar"></i><span class="summary-label">தேதி:</span><span class="summary-value">${bookingData.date || 'நல்ல நாள் ஆலோசனை தேவை'}</span></div>
+    <div class="summary-row"><i class="fas fa-clock"></i><span class="summary-label">நேரம்:</span><span class="summary-value">${bookingData.time || 'ஆலோசனைக்கு பிறகு'}</span></div>
+    ${bookingData.notes ? `<div class="summary-row"><i class="fas fa-comment"></i><span class="summary-label">குறிப்பு:</span><span class="summary-value">${bookingData.notes}</span></div>` : ''}
+  `;
+}
+
+function generateRefNumber() {
+  const now = new Date();
+  const dateStr = now.getFullYear().toString() +
+    String(now.getMonth()+1).padStart(2,'0') +
+    String(now.getDate()).padStart(2,'0');
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let code = '';
+  for (let i = 0; i < 4; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return `TPB-${dateStr}-${code}`;
+}
+
+async function submitBooking() {
+  const refNumber = generateRefNumber();
+  const btn = bookingNextBtn;
+  const orig = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> சமர்ப்பிக்கப்படுகிறது...';
+
+  const formData = new FormData();
+  formData.append('name', bookingData.name);
+  formData.append('phone', bookingData.phone);
+  formData.append('city', bookingData.city);
+  formData.append('date', bookingData.date || 'நல்ல நாள் ஆலோசனை');
+  formData.append('poojaType', bookingData.poojaName);
+  formData.append('message', `[ஆன்லைன் முன்பதிவு] நேரம்: ${bookingData.time || 'குறிப்பிடப்படவில்லை'}. முன்பதிவு எண்: ${refNumber}. ${bookingData.notes}`);
+
+  try {
+    await fetch(scriptURL, { method: 'POST', body: formData });
+  } catch (err) {
+    console.error('Booking submit error:', err);
+  }
+
+  // Show success
+  btn.innerHTML = orig;
+  btn.disabled = false;
+  for (let i = 1; i <= 4; i++) {
+    const step = document.getElementById(`bookingStep${i}`);
+    if (step) step.classList.remove('active');
+  }
+  document.getElementById('bookingSuccess').style.display = '';
+  document.getElementById('bookingSuccess').classList.add('active');
+  document.getElementById('bookingRefDisplay').textContent = refNumber;
+  bookingNav.style.display = 'none';
+
+  // Mark all progress as completed
+  document.querySelectorAll('.progress-step').forEach(el => {
+    el.classList.remove('active');
+    el.classList.add('completed');
+  });
+  document.querySelectorAll('.progress-line').forEach(l => l.classList.add('filled'));
+
+  // WhatsApp confirmation link
+  const waMsg = encodeURIComponent(
+    `🙏 வணக்கம்!\n\n✅ வழிபாடு முன்பதிவு உறுதிப்படுத்தப்பட்டது\n\n📋 முன்பதிவு எண்: ${refNumber}\n🔱 வழிபாடு: ${bookingData.poojaName}\n📅 தேதி: ${bookingData.date || 'நல்ல நாள் ஆலோசனை தேவை'}\n⏰ நேரம்: ${bookingData.time || 'ஆலோசனைக்கு பிறகு'}\n👤 பெயர்: ${bookingData.name}\n📞 தொலைபேசி: ${bookingData.phone}\n📍 இடம்: ${bookingData.city}\n\nவிரைவில் தொடர்பு கொள்ளுங்கள்.`
+  );
+  document.getElementById('whatsappConfirmBtn').href = `https://wa.me/9655747405?text=${waMsg}`;
+
+  // Confetti!
+  launchConfetti();
+}
+
+bookingNextBtn?.addEventListener('click', () => {
+  if (currentStep <= 3) {
+    if (!validateStep(currentStep)) return;
+    if (currentStep === 3) generateBookingSummary();
+    currentStep++;
+    updateStepUI();
+  } else if (currentStep === 4) {
+    submitBooking();
+  }
 });
+
+bookingBackBtn?.addEventListener('click', () => {
+  if (currentStep > 1) {
+    currentStep--;
+    updateStepUI();
+  }
+});
+
+// ================================================================
+//  TIME SLOT SELECTION
+// ================================================================
+document.querySelectorAll('.time-slot-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    bookingData.time = btn.dataset.time;
+  });
+});
+
+// ================================================================
+//  CUSTOM CALENDAR
+// ================================================================
+let calYear, calMonth, calSelectedDate = null;
+const TAMIL_MONTHS = ['ஜனவரி','பிப்ரவரி','மார்ச்','ஏப்ரல்','மே','ஜூன்','ஜூலை','ஆகஸ்ட்','செப்டம்பர்','அக்டோபர்','நவம்பர்','டிசம்பர்'];
+const TAMIL_DAYS = ['ஞா','தி','செ','பு','வி','வெ','ச'];
+
+function initCalendar() {
+  const now = new Date();
+  calYear = now.getFullYear();
+  calMonth = now.getMonth();
+  renderCalendar();
+}
+
+function renderCalendar() {
+  const container = document.getElementById('bookingCalendar');
+  if (!container) return;
+  const today = new Date();
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+  let html = `<div class="cal-header">
+    <button type="button" id="calPrev"><i class="fas fa-chevron-left"></i></button>
+    <span class="cal-month-year">${TAMIL_MONTHS[calMonth]} ${calYear}</span>
+    <button type="button" id="calNext"><i class="fas fa-chevron-right"></i></button>
+  </div><div class="cal-grid">`;
+
+  TAMIL_DAYS.forEach(d => { html += `<div class="cal-day-name">${d}</div>`; });
+
+  for (let i = 0; i < firstDay; i++) html += '<div class="cal-day empty"></div>';
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const dateObj = new Date(calYear, calMonth, day);
+    const isPast = dateObj < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const isToday = dateObj.toDateString() === today.toDateString();
+    const isSelected = calSelectedDate === dateStr;
+    const special = SPECIAL_DATES[dateStr];
+    let classes = 'cal-day';
+    if (isPast) classes += ' past';
+    if (isToday) classes += ' today';
+    if (isSelected) classes += ' selected';
+    let dotHtml = '';
+    let titleAttr = '';
+    if (special) {
+      dotHtml = `<span class="day-dot ${special.type === 'good' ? 'good' : 'avoid'}"></span>`;
+      titleAttr = ` title="${special.label}"`;
+    }
+    html += `<div class="${classes}" data-date="${dateStr}"${titleAttr}>${day}${dotHtml}</div>`;
+  }
+  html += '</div>';
+  container.innerHTML = html;
+
+  document.getElementById('calPrev')?.addEventListener('click', () => {
+    calMonth--;
+    if (calMonth < 0) { calMonth = 11; calYear--; }
+    renderCalendar();
+  });
+  document.getElementById('calNext')?.addEventListener('click', () => {
+    calMonth++;
+    if (calMonth > 11) { calMonth = 0; calYear++; }
+    renderCalendar();
+  });
+
+  container.querySelectorAll('.cal-day:not(.empty):not(.past)').forEach(el => {
+    el.addEventListener('click', () => {
+      container.querySelectorAll('.cal-day').forEach(d => d.classList.remove('selected'));
+      el.classList.add('selected');
+      calSelectedDate = el.dataset.date;
+      const parts = calSelectedDate.split('-');
+      bookingData.date = `${parts[2]}-${parts[1]}-${parts[0]}`;
+    });
+  });
+}
+initCalendar();
+
+// ================================================================
+//  ADD "BOOK NOW" BUTTONS TO ALL POOJA CARDS
+// ================================================================
+document.querySelectorAll('.pooja-card').forEach(card => {
+  const footer = card.querySelector('.pooja-footer');
+  if (footer) {
+    const bookBtn = document.createElement('button');
+    bookBtn.className = 'primary-btn glow-btn book-now-btn';
+    bookBtn.style.cssText = 'font-size:0.78rem;padding:7px 12px;';
+    bookBtn.innerHTML = '<i class="fas fa-calendar-plus"></i> முன்பதிவு';
+    bookBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const poojaId = card.getAttribute('data-pooja-id');
+      openBookingModal(poojaId);
+    });
+    footer.appendChild(bookBtn);
+  }
+});
+
+// Also wire modal "book this pooja" button
+modalCallBtn?.addEventListener('click', () => {
+  closeModal();
+  const currentPoojaId = modalTitle?.textContent ? Object.keys(poojaDetails).find(k => poojaDetails[k].title === modalTitle.textContent) : null;
+  openBookingModal(currentPoojaId);
+});
+
+// ================================================================
+//  GOLDEN CONFETTI ANIMATION
+// ================================================================
+function launchConfetti() {
+  const canvas = document.getElementById('confettiCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const particles = [];
+  const colors = ['#facc15','#f97316','#ef4444','#fbbf24','#fde68a','#f59e0b','#22c55e'];
+
+  for (let i = 0; i < 120; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: Math.random() * 8 + 4,
+      h: Math.random() * 4 + 2,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vy: Math.random() * 3 + 2,
+      vx: (Math.random() - 0.5) * 2,
+      rot: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 10,
+      opacity: 1
+    });
+  }
+
+  let frame = 0;
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    particles.forEach(p => {
+      if (p.opacity <= 0) return;
+      alive = true;
+      p.y += p.vy;
+      p.x += p.vx;
+      p.rot += p.rotSpeed;
+      if (frame > 90) p.opacity -= 0.015;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.globalAlpha = Math.max(0, p.opacity);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (alive && frame < 200) requestAnimationFrame(animate);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  animate();
+}
+
+// ================================================================
+//  TESTIMONIALS CAROUSEL
+// ================================================================
+const testimonialsTrack = document.getElementById('testimonialsTrack');
+const testimonialDotsContainer = document.getElementById('testimonialDots');
+if (testimonialsTrack) {
+  const cards = testimonialsTrack.querySelectorAll('.testimonial-card');
+  const cardCount = cards.length;
+
+  // Create dots
+  if (testimonialDotsContainer) {
+    for (let i = 0; i < cardCount; i++) {
+      const dot = document.createElement('span');
+      dot.className = `testimonial-dot${i === 0 ? ' active' : ''}`;
+      dot.addEventListener('click', () => scrollToCard(i));
+      testimonialDotsContainer.appendChild(dot);
+    }
+  }
+
+  function scrollToCard(index) {
+    const card = cards[index];
+    if (card) {
+      testimonialsTrack.scrollTo({ left: card.offsetLeft - testimonialsTrack.offsetLeft - 10, behavior: 'smooth' });
+    }
+    updateDots(index);
+  }
+
+  function updateDots(activeIdx) {
+    testimonialDotsContainer?.querySelectorAll('.testimonial-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === activeIdx);
+    });
+  }
+
+  // Scroll detection for dots
+  let scrollTimeout;
+  testimonialsTrack.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const scrollLeft = testimonialsTrack.scrollLeft;
+      let closest = 0;
+      let minDist = Infinity;
+      cards.forEach((card, i) => {
+        const dist = Math.abs(card.offsetLeft - testimonialsTrack.offsetLeft - scrollLeft);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      updateDots(closest);
+    }, 100);
+  });
+
+  // Arrow buttons
+  document.querySelector('.testimonial-prev')?.addEventListener('click', () => {
+    testimonialsTrack.scrollBy({ left: -300, behavior: 'smooth' });
+  });
+  document.querySelector('.testimonial-next')?.addEventListener('click', () => {
+    testimonialsTrack.scrollBy({ left: 300, behavior: 'smooth' });
+  });
+
+  // Auto-slide every 5 seconds
+  let autoSlideIdx = 0;
+  setInterval(() => {
+    autoSlideIdx = (autoSlideIdx + 1) % cardCount;
+    scrollToCard(autoSlideIdx);
+  }, 5000);
+}
+
+// ================================================================
+//  FAQ ACCORDION
+// ================================================================
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const answer = item.querySelector('.faq-answer');
+    const isOpen = item.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.faq-item').forEach(faq => {
+      faq.classList.remove('open');
+      faq.querySelector('.faq-answer').style.maxHeight = '0';
+    });
+
+    if (!isOpen) {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  });
+});
+
+// ================================================================
+//  REVIEW FORM
+// ================================================================
+const reviewModal = document.getElementById('reviewModal');
+const openReviewBtn = document.getElementById('openReviewBtn');
+const reviewCloseBtn = document.getElementById('reviewCloseBtn');
+const reviewForm = document.getElementById('reviewForm');
+
+if (openReviewBtn) {
+  openReviewBtn.addEventListener('click', () => {
+    reviewModal.classList.add('active');
+    reviewModal.setAttribute('aria-hidden', 'false');
+  });
+}
+if (reviewCloseBtn) {
+  reviewCloseBtn.addEventListener('click', () => {
+    reviewModal.classList.remove('active');
+    reviewModal.setAttribute('aria-hidden', 'true');
+  });
+}
+reviewModal?.addEventListener('click', e => {
+  if (e.target === reviewModal) {
+    reviewModal.classList.remove('active');
+    reviewModal.setAttribute('aria-hidden', 'true');
+  }
+});
+
+// Star rating
+const starInputs = document.querySelectorAll('.star-input');
+const ratingField = document.getElementById('reviewRating');
+starInputs.forEach(star => {
+  star.addEventListener('click', () => {
+    const rating = parseInt(star.dataset.rating);
+    ratingField.value = rating;
+    starInputs.forEach(s => {
+      s.classList.toggle('active', parseInt(s.dataset.rating) <= rating);
+    });
+  });
+  star.addEventListener('mouseenter', () => {
+    const rating = parseInt(star.dataset.rating);
+    starInputs.forEach(s => {
+      s.classList.toggle('active', parseInt(s.dataset.rating) <= rating);
+    });
+  });
+});
+document.querySelector('.star-rating-input')?.addEventListener('mouseleave', () => {
+  const current = parseInt(ratingField.value) || 0;
+  starInputs.forEach(s => {
+    s.classList.toggle('active', parseInt(s.dataset.rating) <= current);
+  });
+});
+
+// Review form submission
+if (reviewForm) {
+  reviewForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const rating = parseInt(ratingField.value);
+    if (!rating || rating < 1) { alert('தயவுசெய்து மதிப்பீடு (நட்சத்திரங்கள்) தேர்வு செய்யுங்கள்.'); return; }
+
+    const btn = reviewForm.querySelector('button[type="submit"]');
+    const orig = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> சமர்ப்பிக்கப்படுகிறது...';
+
+    const formData = new FormData();
+    formData.append('name', document.getElementById('reviewName').value.trim());
+    formData.append('phone', '');
+    formData.append('city', document.getElementById('reviewLocation').value.trim());
+    formData.append('date', '');
+    formData.append('poojaType', document.getElementById('reviewPooja').value.trim());
+    formData.append('message', `[வாடிக்கையாளர் அனுபவம்] மதிப்பீடு: ${'★'.repeat(rating)} | ${document.getElementById('reviewText').value.trim()}`);
+
+    try {
+      await fetch(scriptURL, { method: 'POST', body: formData });
+    } catch (err) {
+      console.error('Review submit error:', err);
+    }
+
+    btn.innerHTML = orig;
+    btn.disabled = false;
+    document.getElementById('reviewSuccess').hidden = false;
+    reviewForm.reset();
+    ratingField.value = '0';
+    starInputs.forEach(s => s.classList.remove('active'));
+    setTimeout(() => { document.getElementById('reviewSuccess').hidden = true; }, 5000);
+  });
+}
+
+// Escape key to close modals
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (bookingModal?.classList.contains('active')) closeBookingModal();
+    if (reviewModal?.classList.contains('active')) {
+      reviewModal.classList.remove('active');
+      reviewModal.setAttribute('aria-hidden', 'true');
+    }
+  }
+});
+
