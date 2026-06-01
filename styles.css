@@ -117,9 +117,10 @@ button {
 
 
 
-.logo{
-  height:80px;
-  width: 80px;}
+.logo {
+  height: 80px;
+  width: 80px;
+}
 
 .logo-text {
   display: flex;
@@ -207,11 +208,9 @@ button {
   background: transparent;
   border: 1px solid rgba(250, 204, 21, 0.55);
   color: var(--text-main);
-  background-image: linear-gradient(
-    135deg,
-    rgba(250, 204, 21, 0.06),
-    rgba(248, 113, 113, 0.03)
-  );
+  background-image: linear-gradient(135deg,
+      rgba(250, 204, 21, 0.06),
+      rgba(248, 113, 113, 0.03));
 }
 
 .secondary-btn:hover {
@@ -392,12 +391,13 @@ button {
   background: radial-gradient(circle at top, #fff7ed, #fefce8);
   border: 1px solid rgba(209, 213, 219, 0.9);
   padding: 12px 12px 16px;
+  
   box-shadow: var(--shadow-soft);
   overflow: hidden;
   transform-origin: center;
   animation: floatCard 8s ease-in-out infinite;
 }
-
+  
 
 .priest-photo {
   display: grid;
@@ -408,11 +408,9 @@ button {
   overflow: hidden;
   height: 210px;
   margin-bottom: 14px;
-  background-image: linear-gradient(
-      to bottom,
+  background-image: linear-gradient(to bottom,
       rgba(248, 250, 252, 0.3),
-      rgba(15, 23, 42, 0.55)
-    );
+      rgba(15, 23, 42, 0.55));
   background-size: cover;
   background-position: center;
 }
@@ -424,25 +422,31 @@ button {
     gap: 24px;
     padding: 0 4vw;
   }
+
   .site-header {
     padding: 18px 3vw 40px;
   }
+
   .nav-container {
     flex-direction: column;
     gap: 12px;
     margin-bottom: 24px;
   }
+
   .logo {
     height: 60px;
     width: 60px;
   }
+
   .main-nav {
     gap: 12px;
     font-size: 1rem;
   }
+
   .hero-main-card {
     padding: 8px 4px 12px;
   }
+
   .priest-photo {
     height: 140px;
     grid-template-columns: 1fr 1fr;
@@ -453,34 +457,42 @@ button {
   .site-header {
     padding: 12px 2vw 24px;
   }
+
   .nav-container {
     flex-direction: column;
     gap: 8px;
     margin-bottom: 12px;
   }
+
   .logo {
     height: 44px;
     width: 44px;
   }
+
   .main-nav {
     flex-direction: column;
     gap: 8px;
     font-size: 0.98rem;
   }
+
   .hero {
     gap: 14px;
     padding: 0 2vw;
   }
+
   .hero-content {
     max-width: 100%;
   }
+
   .hero-main-card {
     padding: 4px 2px 8px;
   }
+
   .priest-photo {
     height: 90px;
     grid-template-columns: 1fr 1fr;
   }
+
   .trust-item {
     min-width: 80px;
     padding: 6px 8px;
@@ -636,105 +648,171 @@ button {
 }
 
 .pooja-card {
-  background: linear-gradient(145deg, #ffffff, #fefce8 40%, #ffe4e6 90%);
-  border-radius: 22px;
-  border: 1px solid rgba(209, 213, 219, 0.9);
-  overflow: visible;
-  box-shadow: 0 18px 40px rgba(148, 163, 184, 0.45);
+  position: relative;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(212, 160, 23, 0.3);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  transition: transform var(--transition-med), box-shadow var(--transition-med),
-    border-color var(--transition-med), background 0.35s ease-out;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.pooja-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a017' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  z-index: 0;
+  pointer-events: none;
 }
 
 .pooja-card:hover {
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 24px 60px rgba(148, 163, 184, 0.6);
-  border-color: rgba(248, 189, 65, 0.9);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(212, 160, 23, 0.15);
+  border-color: rgba(212, 160, 23, 0.8);
 }
 
 .pooja-image {
-  position: relative;
-  height: 160px;
-  background-size: cover;
-  background-position: center;
-}
-
-.pooja-img-ganapathi {
-  background-image: url(naming.jpg);
- 
-}
-
-.pooja-img-gruhapravesam {
-  background-image: url(food.png);
-}
-
-.pooja-img-manjal {
-  background-image: url(manjal.png)
-}
-
-.pooja-img-lakshmi {
-  background-image: url(ear_hair.png)
-}
-.pooja-img-lakshm {
-  background-image: url("https://images.pexels.com/photos/1457812/pexels-photo-1457812.jpeg?auto=compress&cs=tinysrgb&w=800");
-}
-
-
-.pooja-img-muhurtham {
-  background-image: url(ezhuthu.jpg)
-}
-
-
-
-.pooja-image::before {
-  content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    
-  );
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 0.5s ease;
 }
 
-.pooja-chip {
+/* ===== Pooja Card Carousel (front: auto-play preview) ===== */
+.pooja-carousel-wrapper {
+  position: relative;
+  height: 240px;
+  width: 100%;
+  overflow: hidden;
+  border-bottom: 3px solid #d4a017;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(251, 191, 36, 0.2), transparent 55%),
+    linear-gradient(165deg, #1a0f05 0%, #3d2814 45%, #2a1810 100%);
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.35);
+}
+
+.pooja-carousel-wrapper::before {
+  content: "";
   position: absolute;
-  top: 14px;
-  left: 14px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  background: rgba(254, 252, 232, 0.96);
-  border: 1px solid rgba(248, 189, 65, 0.9);
-  color: #78350f;
+  inset: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  pointer-events: none;
+  z-index: 3;
 }
 
-.chip-gold {
-  border-color: rgba(234, 179, 8, 0.95);
+.pooja-carousel-wrapper::after {
+  content: "✦";
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  color: rgba(251, 191, 36, 0.45);
+  font-size: 0.75rem;
+  z-index: 3;
+  pointer-events: none;
 }
 
-.chip-maroon {
-  border-color: rgba(127, 29, 29, 0.9);
+.pooja-carousel-track {
+  position: absolute;
+  inset: 12px;
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(254, 249, 231, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
-.chip-green {
-  border-color: rgba(22, 163, 74, 0.9);
+.pooja-carousel-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
 }
+
+.pooja-carousel-slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.pooja-carousel-slide img,
+.pooja-carousel-slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #1a0f05;
+}
+
+/* Religious decorative ornaments */
+.pooja-card-ornament {
+  position: absolute;
+  z-index: 4;
+  font-size: 1.1rem;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
+  animation: flickerLamp 2s ease-in-out infinite alternate;
+}
+
+.pooja-card-ornament.top-left {
+  top: 10px;
+  left: 10px;
+}
+
+.pooja-card-ornament.top-right {
+  top: 10px;
+  right: 10px;
+}
+
+@keyframes flickerLamp {
+  0% { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.15); }
+}
+
+.pooja-img-gruhapravesam { background-image: url(food.png); }
+.pooja-img-manjal { background-image: url(manjal.png); }
+.pooja-img-lakshmi { background-image: url(ear_hair.png); }
+.pooja-img-lakshm { background-image: url("https://images.pexels.com/photos/1457812/pexels-photo-1457812.jpeg?auto=compress&cs=tinysrgb&w=800"); }
+.pooja-img-muhurtham { background-image: url(ezhuthu.jpg); }
+.pooja-img-naming1 { background-image: url(thotilai.png); }
+.pooja-img-naming2 { background-image: url(naming_ceremony_1.png); }
+.pooja-img-naming3 { background-image: url(naming_ceremony_2.png); }
+.pooja-img-naming4 { background-image: url(naming.jpg); }
+.pooja-img-ganapathi { background-image: url("https://images.pexels.com/photos/17390126/pexels-photo-17390126/free-photo-of-hindu-god-ganesha.jpeg?auto=compress&cs=tinysrgb&w=800"); }
+.pooja-img-navagraha { background-image: url(shop.png); }
 
 .pooja-content {
-  padding: 14px 16px 14px;
+  padding: 24px 20px;
+  position: relative;
+  z-index: 1;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.95), #ffffff);
 }
 
 .pooja-title {
-  margin: 0;
-  font-size: 1rem;
-  overflow-wrap: break-word;
+  color: #7f1d1d;
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin: 0 0 12px 0;
+  text-align: center;
+  line-height: 1.4;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
+.title-separator {
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #d4a017, transparent);
+  margin: 0 auto 16px;
 }
 
 .pooja-sub {
@@ -745,11 +823,12 @@ button {
 }
 
 .pooja-brief {
-  margin: 0;
-  font-size: 0.86rem;
-  color: var(--text-soft);
-  line-height: 1.5;
-  overflow-wrap: break-word;
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: center;
+  flex: 1;
+  margin: 0 0 20px 0;
 }
 
 .pooja-tags {
@@ -770,12 +849,17 @@ button {
 }
 
 .pooja-footer {
-  margin-top: 6px;
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+  padding-top: 16px;
+  border-top: 1px dashed rgba(212, 160, 23, 0.4);
+}
+
+.pooja-footer > button {
+  width: 100%;
+  justify-content: center;
 }
 
 .about-section {
@@ -837,29 +921,23 @@ button {
 .side-highlight {
   border-radius: 20px;
   padding: 12px 14px;
-  background: linear-gradient(
-    135deg,
-    rgba(191, 219, 254, 0.9),
-    rgba(254, 252, 232, 0.98)
-  );
+  background: linear-gradient(135deg,
+      rgba(191, 219, 254, 0.9),
+      rgba(254, 252, 232, 0.98));
   border: 1px solid rgba(59, 130, 246, 0.8);
 }
 
 .side-highlight:nth-child(2) {
-  background: linear-gradient(
-    135deg,
-    rgba(187, 247, 208, 0.9),
-    rgba(254, 252, 232, 0.98)
-  );
+  background: linear-gradient(135deg,
+      rgba(187, 247, 208, 0.9),
+      rgba(254, 252, 232, 0.98));
   border-color: rgba(22, 163, 74, 0.85);
 }
 
 .side-highlight:nth-child(3) {
-  background: linear-gradient(
-    135deg,
-    rgba(254, 249, 195, 0.96),
-    rgba(254, 243, 199, 0.98)
-  );
+  background: linear-gradient(135deg,
+      rgba(254, 249, 195, 0.96),
+      rgba(254, 243, 199, 0.98));
   border-color: rgba(217, 119, 6, 0.9);
 }
 
@@ -981,11 +1059,9 @@ button {
 .call-card {
   border-radius: 20px;
   padding: 16px 16px 14px;
-  background: linear-gradient(
-    135deg,
-    rgba(220, 252, 231, 0.98),
-    rgba(254, 252, 232, 0.98)
-  );
+  background: linear-gradient(135deg,
+      rgba(220, 252, 231, 0.98),
+      rgba(254, 252, 232, 0.98));
   border: 1px solid rgba(34, 197, 94, 0.9);
   box-shadow: var(--shadow-soft);
 }
@@ -1085,13 +1161,13 @@ button {
 }
 
 .modal-dialog {
-  max-width: 820px;
-  width: 100%;
+  max-width: 860px;
+  width: 95%;
   max-height: 90vh;
-  border-radius: 26px;
-  background: linear-gradient(145deg, #ffffff, #fefce8 40%, #fff7ed);
-  border: 1px solid rgba(209, 213, 219, 0.9);
-  box-shadow: 0 30px 80px rgba(148, 163, 184, 0.7);
+  border-radius: 28px;
+  background: #ffffff;
+  border: 2px solid rgba(212, 160, 23, 0.6);
+  box-shadow: 0 40px 100px rgba(148, 163, 184, 0.8), inset 0 0 40px rgba(212, 160, 23, 0.05);
   position: relative;
   transform: translateY(20px) scale(0.96);
   transition: transform var(--transition-med);
@@ -1104,86 +1180,245 @@ button {
   transform: translateY(0) scale(1);
 }
 
+.modal-dialog::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a017' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  z-index: 0;
+  pointer-events: none;
+}
+
 .modal-close {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  border: 1px solid rgba(209, 213, 219, 0.9);
-  background: rgba(249, 250, 251, 0.96);
-  color: var(--text-muted);
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #d4a017;
+  background: #fff;
+  color: #7f1d1d;
+  font-size: 1.2rem;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  background: #7f1d1d;
+  color: #fff;
+  transform: rotate(90deg);
 }
 
 .modal-body {
   display: grid;
-  grid-template-columns: minmax(0, 2.2fr) minmax(0, 3fr);
+  grid-template-columns: 1fr 1.5fr;
   gap: 0;
   overflow-y: auto;
   min-height: 0;
-}
-
-.modal-image {
-  min-height: 260px;
-  background-size: cover;
-  background-position: center;
   position: relative;
+  z-index: 1;
 }
 
-.modal-image::before {
-  content: "";
+/* Modal inner media gallery (manual slide, full image visible) */
+.modal-media-panel {
+  min-height: 280px;
+  position: relative;
+  border-right: 2px solid rgba(212, 160, 23, 0.3);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(251, 191, 36, 0.15), transparent 50%),
+    linear-gradient(180deg, #2a1810 0%, #1a0f05 100%);
+  display: flex;
+  align-items: stretch;
+}
+
+.modal-media-frame {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px 36px;
+  min-height: 280px;
+}
+
+.modal-media-viewport {
+  position: relative;
+  flex: 1;
+  min-height: 220px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0f0804;
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.4);
+}
+
+.modal-media-slide {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at top, rgba(248, 250, 252, 0.18), transparent),
-    linear-gradient(
-      to bottom,
-      rgba(248, 250, 252, 0.1),
-      rgba(15, 23, 42, 0.65)
-    );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background: #1a0f05;
+}
+
+.modal-media-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.modal-media-slide img,
+.modal-media-slide video {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 8px;
+}
+
+.modal-media-fill {
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.modal-media-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(251, 191, 36, 0.7);
+  background: rgba(254, 252, 232, 0.95);
+  color: #92400e;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.modal-media-nav:hover {
+  background: linear-gradient(135deg, #fbbf24, #f97316);
+  color: #fff;
+  transform: translateY(-50%) scale(1.06);
+}
+
+.modal-media-prev {
+  left: 6px;
+}
+
+.modal-media-next {
+  right: 6px;
+}
+
+.modal-media-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 4;
+}
+
+.modal-media-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(251, 191, 36, 0.6);
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.modal-media-dot.active {
+  width: 22px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #fbbf24, #f97316);
+  border-color: #d4a017;
 }
 
 .modal-content {
-  padding: 18px 20px 16px;
+  padding: 30px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.98));
   overflow-wrap: break-word;
 }
 
 .modal-content h3 {
-  margin: 0 0 2px;
+  color: #7f1d1d;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0 0 8px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
 .modal-subtitle {
-  margin: 0 0 10px;
-  color: var(--accent-soft);
-  font-size: 0.85rem;
+  color: #b45309;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 20px;
+  border-bottom: 2px dashed rgba(212, 160, 23, 0.3);
+  padding-bottom: 12px;
 }
 
 .modal-section {
-  margin-bottom: 10px;
+  margin-bottom: 16px;
+  background: rgba(254, 252, 232, 0.6);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(212, 160, 23, 0.15);
 }
 
 .modal-section h4 {
-  margin: 0 0 4px;
-  font-size: 0.9rem;
+  color: #92400e;
+  font-size: 1.05rem;
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-section h4::before {
+  content: "✦";
+  color: #d4a017;
 }
 
 .modal-section ul {
   margin: 0;
   padding-left: 18px;
-  font-size: 0.86rem;
-  color: var(--text-soft);
+  font-size: 0.95rem;
+  color: #374151;
+  line-height: 1.6;
 }
 
-.modal-section li + li {
-  margin-top: 2px;
+.modal-section li {
+  margin-bottom: 6px;
+}
+.modal-section li::marker {
+  color: #d4a017;
 }
 
 .modal-cta-row {
-  margin-top: 8px;
+  margin-top: 16px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -1321,13 +1556,16 @@ button {
 }
 
 @keyframes floatCard {
+
   0%,
   100% {
     transform: translateY(0) rotate3d(0, 1, 0, 0deg);
   }
+
   40% {
     transform: translateY(-6px) rotate3d(0, 1, 0, 2deg);
   }
+
   60% {
     transform: translateY(-3px) rotate3d(0, 1, 0, -1deg);
   }
@@ -1351,7 +1589,7 @@ button {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .modal-image {
+  .modal-media-panel {
     min-height: 200px;
   }
 
@@ -1429,51 +1667,71 @@ button {
   position: relative;
   overflow: hidden;
 }
+
 .booking-cta-container {
   max-width: 750px;
   margin: 0 auto;
   text-align: center;
   position: relative;
 }
+
 .booking-cta-glow {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(250,204,21,0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(250, 204, 21, 0.15) 0%, transparent 70%);
   pointer-events: none;
   animation: pulseGlow 4s ease-in-out infinite;
 }
+
 @keyframes pulseGlow {
-  0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 0.7; }
-  50% { transform: translate(-50%,-50%) scale(1.2); opacity: 1; }
+
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
 }
-.booking-cta-content { position: relative; z-index: 1; }
+
+.booking-cta-content {
+  position: relative;
+  z-index: 1;
+}
+
 .booking-cta-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 6px 16px;
   border-radius: 999px;
-  background: rgba(250,204,21,0.12);
-  border: 1px solid rgba(250,204,21,0.4);
+  background: rgba(250, 204, 21, 0.12);
+  border: 1px solid rgba(250, 204, 21, 0.4);
   color: #fbbf24;
   font-size: 0.82rem;
   font-weight: 600;
   margin-bottom: 16px;
 }
+
 .booking-cta-content h2 {
   color: #fefce8;
   font-size: clamp(1.4rem, 3vw, 2rem);
   margin: 0 0 10px;
 }
+
 .booking-cta-content p {
-  color: rgba(254,252,232,0.7);
+  color: rgba(254, 252, 232, 0.7);
   font-size: 0.95rem;
   margin: 0 0 20px;
 }
+
 .booking-cta-steps {
   display: flex;
   align-items: center;
@@ -1482,17 +1740,19 @@ button {
   flex-wrap: wrap;
   margin-bottom: 24px;
 }
+
 .cta-step-item {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   color: #fef9c3;
   font-size: 0.82rem;
 }
+
 .cta-step-num {
   width: 22px;
   height: 22px;
@@ -1505,7 +1765,12 @@ button {
   align-items: center;
   justify-content: center;
 }
-.cta-step-arrow { color: rgba(250,204,21,0.4); font-size: 0.7rem; }
+
+.cta-step-arrow {
+  color: rgba(250, 204, 21, 0.4);
+  font-size: 0.7rem;
+}
+
 .booking-cta-btn {
   padding: 14px 32px !important;
   font-size: 1.05rem !important;
@@ -1516,6 +1781,7 @@ button {
   position: relative;
   overflow: hidden;
 }
+
 .glow-btn::before {
   content: '';
   position: absolute;
@@ -1528,9 +1794,17 @@ button {
   filter: blur(8px);
   opacity: 0.6;
 }
+
 @keyframes glowShift {
-  0%,100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 /* ========================================
@@ -1539,7 +1813,7 @@ button {
 .booking-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15,23,42,0.6);
+  background: rgba(15, 23, 42, 0.6);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -1550,25 +1824,32 @@ button {
   transition: opacity 0.3s, visibility 0.3s;
   z-index: 50;
 }
-.booking-backdrop.active { opacity: 1; visibility: visible; }
+
+.booking-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
 .booking-dialog {
   width: 100%;
   max-width: 680px;
   max-height: 92vh;
   border-radius: 24px;
   background: linear-gradient(160deg, #fffbeb 0%, #fff7ed 30%, #ffffff 100%);
-  border: 1px solid rgba(250,204,21,0.3);
-  box-shadow: 0 30px 80px rgba(0,0,0,0.25), 0 0 60px rgba(250,204,21,0.08);
+  border: 1px solid rgba(250, 204, 21, 0.3);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25), 0 0 60px rgba(250, 204, 21, 0.08);
   position: relative;
   transform: translateY(30px) scale(0.95);
-  transition: transform 0.35s cubic-bezier(0.19,1,0.22,1);
+  transition: transform 0.35s cubic-bezier(0.19, 1, 0.22, 1);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
+
 .booking-backdrop.active .booking-dialog {
   transform: translateY(0) scale(1);
 }
+
 .booking-close {
   position: absolute;
   top: 12px;
@@ -1576,8 +1857,8 @@ button {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid rgba(209,213,219,0.9);
-  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(209, 213, 219, 0.9);
+  background: rgba(255, 255, 255, 0.9);
   color: var(--text-muted);
   display: flex;
   align-items: center;
@@ -1586,7 +1867,11 @@ button {
   z-index: 5;
   transition: background 0.2s, color 0.2s;
 }
-.booking-close:hover { background: #fee2e2; color: #b91c1c; }
+
+.booking-close:hover {
+  background: #fee2e2;
+  color: #b91c1c;
+}
 
 /* Progress Steps */
 .booking-progress {
@@ -1596,6 +1881,7 @@ button {
   gap: 0;
   padding: 24px 20px 8px;
 }
+
 .progress-step {
   display: flex;
   flex-direction: column;
@@ -1603,11 +1889,12 @@ button {
   gap: 4px;
   min-width: 60px;
 }
+
 .step-circle {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: rgba(229,231,235,0.9);
+  background: rgba(229, 231, 235, 0.9);
   border: 2px solid #d1d5db;
   display: flex;
   align-items: center;
@@ -1615,26 +1902,37 @@ button {
   font-size: 1.1rem;
   transition: all 0.4s;
 }
+
 .progress-step.active .step-circle,
 .progress-step.completed .step-circle {
   background: linear-gradient(135deg, #fef9c3, #fbbf24);
   border-color: #f59e0b;
-  box-shadow: 0 4px 16px rgba(245,158,11,0.35);
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
   transform: scale(1.1);
 }
+
 .progress-step.completed .step-circle {
   background: linear-gradient(135deg, #bbf7d0, #22c55e);
   border-color: #16a34a;
-  box-shadow: 0 4px 16px rgba(22,163,74,0.3);
+  box-shadow: 0 4px 16px rgba(22, 163, 74, 0.3);
 }
+
 .progress-step span {
   font-size: 0.68rem;
   color: var(--text-muted);
   font-weight: 500;
   transition: color 0.3s;
 }
-.progress-step.active span { color: #92400e; font-weight: 700; }
-.progress-step.completed span { color: #166534; }
+
+.progress-step.active span {
+  color: #92400e;
+  font-weight: 700;
+}
+
+.progress-step.completed span {
+  color: #166534;
+}
+
 .progress-line {
   flex: 1;
   height: 3px;
@@ -1645,6 +1943,7 @@ button {
   transition: background 0.5s;
   max-width: 60px;
 }
+
 .progress-line.filled {
   background: linear-gradient(90deg, #22c55e, #fbbf24);
 }
@@ -1655,15 +1954,28 @@ button {
   flex: 1;
   overflow-y: auto;
 }
+
 .booking-step {
   display: none;
   animation: fadeSlideIn 0.4s ease-out;
 }
-.booking-step.active { display: block; }
-@keyframes fadeSlideIn {
-  from { opacity: 0; transform: translateX(30px); }
-  to { opacity: 1; transform: translateX(0); }
+
+.booking-step.active {
+  display: block;
 }
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .step-title {
   font-size: 1.1rem;
   margin: 0 0 16px;
@@ -1679,10 +1991,11 @@ button {
   overflow-y: auto;
   padding-right: 4px;
 }
+
 .pooja-select-card {
   padding: 12px;
   border-radius: 14px;
-  border: 2px solid rgba(209,213,219,0.7);
+  border: 2px solid rgba(209, 213, 219, 0.7);
   background: white;
   cursor: pointer;
   text-align: center;
@@ -1693,16 +2006,19 @@ button {
   align-items: center;
   gap: 8px;
 }
+
 .pooja-select-card:hover {
-  border-color: rgba(250,204,21,0.7);
+  border-color: rgba(250, 204, 21, 0.7);
   background: #fffbeb;
   transform: translateY(-2px);
 }
+
 .pooja-select-card.selected {
   border-color: #f59e0b;
   background: linear-gradient(135deg, #fef9c3, #fff7ed);
-  box-shadow: 0 4px 16px rgba(245,158,11,0.2);
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);
 }
+
 .pooja-select-card .pooja-select-icon {
   width: 32px;
   height: 32px;
@@ -1731,24 +2047,26 @@ button {
 
 /* Custom Calendar */
 .custom-calendar {
-  border: 1px solid rgba(209,213,219,0.8);
+  border: 1px solid rgba(209, 213, 219, 0.8);
   border-radius: 16px;
   background: white;
   overflow: hidden;
 }
+
 .cal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 12px;
   background: linear-gradient(135deg, #fef9c3, #fff7ed);
-  border-bottom: 1px solid rgba(209,213,219,0.5);
+  border-bottom: 1px solid rgba(209, 213, 219, 0.5);
 }
+
 .cal-header button {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  border: 1px solid rgba(209,213,219,0.8);
+  border: 1px solid rgba(209, 213, 219, 0.8);
   background: white;
   cursor: pointer;
   display: flex;
@@ -1758,18 +2076,24 @@ button {
   color: var(--text-main);
   transition: background 0.2s;
 }
-.cal-header button:hover { background: #fef9c3; }
+
+.cal-header button:hover {
+  background: #fef9c3;
+}
+
 .cal-month-year {
   font-weight: 700;
   font-size: 0.88rem;
   color: #92400e;
 }
+
 .cal-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   padding: 6px;
   gap: 2px;
 }
+
 .cal-day-name {
   text-align: center;
   font-size: 0.65rem;
@@ -1777,6 +2101,7 @@ button {
   color: var(--text-muted);
   padding: 4px 0;
 }
+
 .cal-day {
   text-align: center;
   padding: 6px 2px;
@@ -1786,19 +2111,32 @@ button {
   transition: all 0.2s;
   position: relative;
 }
-.cal-day:hover { background: #fef9c3; }
+
+.cal-day:hover {
+  background: #fef9c3;
+}
+
 .cal-day.today {
   font-weight: 800;
   color: #f59e0b;
 }
+
 .cal-day.selected {
   background: linear-gradient(135deg, #fbbf24, #f97316);
   color: white;
   font-weight: 700;
-  box-shadow: 0 2px 8px rgba(245,158,11,0.3);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
 }
-.cal-day.empty { pointer-events: none; }
-.cal-day.past { color: #d1d5db; pointer-events: none; }
+
+.cal-day.empty {
+  pointer-events: none;
+}
+
+.cal-day.past {
+  color: #d1d5db;
+  pointer-events: none;
+}
+
 .cal-day .day-dot {
   position: absolute;
   bottom: 2px;
@@ -1808,9 +2146,19 @@ button {
   height: 5px;
   border-radius: 50%;
 }
-.day-dot.good { background: #22c55e; }
-.day-dot.avoid { background: #ef4444; }
-.cal-day[title] { cursor: help; }
+
+.day-dot.good {
+  background: #22c55e;
+}
+
+.day-dot.avoid {
+  background: #ef4444;
+}
+
+.cal-day[title] {
+  cursor: help;
+}
+
 .calendar-legend {
   display: flex;
   gap: 14px;
@@ -1819,26 +2167,43 @@ button {
   font-size: 0.72rem;
   color: var(--text-muted);
 }
-.legend-item { display: flex; align-items: center; gap: 4px; }
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   display: inline-block;
 }
-.dot-good { background: #22c55e; }
-.dot-avoid { background: #ef4444; }
+
+.dot-good {
+  background: #22c55e;
+}
+
+.dot-avoid {
+  background: #ef4444;
+}
+
 .nalla-naal-note {
   margin: 10px 0 0;
   font-size: 0.78rem;
   color: #92400e;
-  background: rgba(254,249,195,0.6);
+  background: rgba(254, 249, 195, 0.6);
   padding: 10px 12px;
   border-radius: 12px;
-  border: 1px solid rgba(250,204,21,0.3);
+  border: 1px solid rgba(250, 204, 21, 0.3);
   line-height: 1.5;
 }
-.nalla-naal-note i { color: #f59e0b; margin-right: 4px; }
+
+.nalla-naal-note i {
+  color: #f59e0b;
+  margin-right: 4px;
+}
 
 /* Time Slots */
 .timeslot-label {
@@ -1848,15 +2213,17 @@ button {
   display: block;
   color: var(--text-main);
 }
+
 .time-slots {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
+
 .time-slot-btn {
   padding: 10px 16px;
   border-radius: 12px;
-  border: 2px solid rgba(209,213,219,0.7);
+  border: 2px solid rgba(209, 213, 219, 0.7);
   background: white;
   cursor: pointer;
   font-size: 0.85rem;
@@ -1865,26 +2232,29 @@ button {
   transition: all 0.25s;
   color: var(--text-main);
 }
+
 .time-slot-btn:hover {
-  border-color: rgba(250,204,21,0.6);
+  border-color: rgba(250, 204, 21, 0.6);
   background: #fffbeb;
 }
+
 .time-slot-btn.selected {
   border-color: #f59e0b;
   background: linear-gradient(135deg, #fef9c3, #fff7ed);
-  box-shadow: 0 2px 12px rgba(245,158,11,0.2);
+  box-shadow: 0 2px 12px rgba(245, 158, 11, 0.2);
   font-weight: 600;
 }
 
 /* Step 4: Summary Card */
 .booking-summary-card {
   border-radius: 20px;
-  border: 2px solid rgba(250,204,21,0.4);
+  border: 2px solid rgba(250, 204, 21, 0.4);
   background: linear-gradient(160deg, #fffbeb, #fff7ed, #fef2f2);
   padding: 24px;
   position: relative;
   overflow: hidden;
 }
+
 .booking-summary-card::before {
   content: '';
   position: absolute;
@@ -1896,47 +2266,66 @@ button {
   background-size: 200% 100%;
   animation: shimmerBorder 3s linear infinite;
 }
+
 @keyframes shimmerBorder {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
+
 .summary-header {
   text-align: center;
   margin-bottom: 16px;
   padding-bottom: 12px;
-  border-bottom: 1px dashed rgba(250,204,21,0.5);
+  border-bottom: 1px dashed rgba(250, 204, 21, 0.5);
 }
+
 .summary-header h4 {
   margin: 0 0 2px;
   font-size: 1rem;
   color: #92400e;
 }
+
 .summary-header p {
   margin: 0;
   font-size: 0.78rem;
   color: var(--text-muted);
 }
+
 .summary-row {
   display: flex;
   align-items: flex-start;
   gap: 10px;
   padding: 8px 0;
-  border-bottom: 1px solid rgba(229,231,235,0.5);
+  border-bottom: 1px solid rgba(229, 231, 235, 0.5);
   font-size: 0.88rem;
 }
-.summary-row:last-child { border-bottom: none; }
+
+.summary-row:last-child {
+  border-bottom: none;
+}
+
 .summary-row i {
   color: #f59e0b;
   margin-top: 2px;
   width: 18px;
   flex-shrink: 0;
 }
+
 .summary-label {
   color: var(--text-muted);
   min-width: 90px;
   font-size: 0.8rem;
 }
-.summary-value { font-weight: 600; color: var(--text-main); }
+
+.summary-value {
+  font-weight: 600;
+  color: var(--text-main);
+}
 
 /* Booking Navigation */
 .booking-nav {
@@ -1946,7 +2335,9 @@ button {
   padding: 12px 24px 20px;
   gap: 12px;
 }
-.booking-back-btn, .booking-next-btn {
+
+.booking-back-btn,
+.booking-next-btn {
   padding: 10px 22px;
   border-radius: 999px;
   border: none;
@@ -1959,21 +2350,27 @@ button {
   gap: 8px;
   transition: all 0.25s;
 }
+
 .booking-back-btn {
   background: transparent;
-  border: 1px solid rgba(209,213,219,0.9);
+  border: 1px solid rgba(209, 213, 219, 0.9);
   color: var(--text-soft);
 }
-.booking-back-btn:hover { background: #f3f4f6; }
+
+.booking-back-btn:hover {
+  background: #f3f4f6;
+}
+
 .booking-next-btn {
   background: linear-gradient(135deg, #facc15, #f97316);
   color: #111827;
-  box-shadow: 0 6px 20px rgba(248,181,0,0.3);
+  box-shadow: 0 6px 20px rgba(248, 181, 0, 0.3);
   margin-left: auto;
 }
+
 .booking-next-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 28px rgba(248,181,0,0.5);
+  box-shadow: 0 8px 28px rgba(248, 181, 0, 0.5);
 }
 
 /* Success State */
@@ -1981,25 +2378,38 @@ button {
   text-align: center;
   padding: 20px 0;
 }
+
 .success-icon-anim {
   font-size: 3.5rem;
-  animation: successBounce 0.6s cubic-bezier(0.68,-0.55,0.27,1.55);
+  animation: successBounce 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
+
 @keyframes successBounce {
-  0% { transform: scale(0); }
-  60% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(0);
+  }
+
+  60% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
+
 .booking-ref-display {
   margin: 8px 0 20px;
   font-size: 0.95rem;
   color: var(--text-soft);
 }
+
 .booking-ref-display strong {
   color: #92400e;
   font-size: 1.1rem;
   letter-spacing: 0.05em;
 }
+
 .success-status-tracker {
   display: flex;
   align-items: center;
@@ -2008,6 +2418,7 @@ button {
   margin: 20px 0;
   flex-wrap: wrap;
 }
+
 .status-step {
   display: flex;
   flex-direction: column;
@@ -2015,12 +2426,35 @@ button {
   gap: 4px;
   padding: 0 8px;
 }
-.status-step i { font-size: 1.3rem; color: #d1d5db; }
-.status-step span { font-size: 0.72rem; color: var(--text-muted); }
-.status-step.completed i { color: #22c55e; }
-.status-step.completed span { color: #166534; font-weight: 600; }
-.status-step.active-status i { color: #f59e0b; }
-.status-step.active-status span { color: #92400e; font-weight: 600; }
+
+.status-step i {
+  font-size: 1.3rem;
+  color: #d1d5db;
+}
+
+.status-step span {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.status-step.completed i {
+  color: #22c55e;
+}
+
+.status-step.completed span {
+  color: #166534;
+  font-weight: 600;
+}
+
+.status-step.active-status i {
+  color: #f59e0b;
+}
+
+.status-step.active-status span {
+  color: #92400e;
+  font-weight: 600;
+}
+
 .status-line-h {
   width: 40px;
   height: 3px;
@@ -2028,6 +2462,7 @@ button {
   border-radius: 999px;
   margin-bottom: 18px;
 }
+
 .whatsapp-confirm-btn {
   display: inline-flex;
   align-items: center;
@@ -2041,8 +2476,9 @@ button {
   text-decoration: none;
   margin-top: 10px;
   transition: background 0.2s, transform 0.2s;
-  box-shadow: 0 6px 20px rgba(34,197,94,0.3);
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
 }
+
 .whatsapp-confirm-btn:hover {
   background: #16a34a;
   transform: translateY(-2px);
@@ -2062,6 +2498,7 @@ button {
 .testimonials-section {
   background: radial-gradient(circle at top, #fff7ed, #fefce8 60%, #fdfcf9);
 }
+
 .testimonials-track-wrapper {
   max-width: 1100px;
   margin: 0 auto;
@@ -2070,6 +2507,7 @@ button {
   align-items: center;
   gap: 8px;
 }
+
 .testimonials-track {
   display: flex;
   gap: 16px;
@@ -2080,7 +2518,11 @@ button {
   scrollbar-width: none;
   padding: 8px 4px;
 }
-.testimonials-track::-webkit-scrollbar { display: none; }
+
+.testimonials-track::-webkit-scrollbar {
+  display: none;
+}
+
 .testimonial-card {
   min-width: 280px;
   max-width: 320px;
@@ -2089,20 +2531,23 @@ button {
   padding: 20px;
   border-radius: 20px;
   background: white;
-  border: 1px solid rgba(209,213,219,0.8);
-  box-shadow: 0 8px 30px rgba(148,163,184,0.2);
+  border: 1px solid rgba(209, 213, 219, 0.8);
+  box-shadow: 0 8px 30px rgba(148, 163, 184, 0.2);
   transition: transform 0.3s, box-shadow 0.3s;
 }
+
 .testimonial-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 14px 40px rgba(148,163,184,0.35);
+  box-shadow: 0 14px 40px rgba(148, 163, 184, 0.35);
 }
+
 .testimonial-stars {
   color: #f59e0b;
   font-size: 1rem;
   margin-bottom: 8px;
   letter-spacing: 2px;
 }
+
 .testimonial-text {
   font-size: 0.88rem;
   color: var(--text-soft);
@@ -2110,11 +2555,13 @@ button {
   margin: 0 0 14px;
   font-style: italic;
 }
+
 .testimonial-author {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 .testimonial-avatar {
   width: 36px;
   height: 36px;
@@ -2128,20 +2575,23 @@ button {
   font-size: 0.9rem;
   flex-shrink: 0;
 }
+
 .testimonial-author strong {
   display: block;
   font-size: 0.85rem;
   color: var(--text-main);
 }
+
 .testimonial-author span {
   font-size: 0.75rem;
   color: var(--text-muted);
 }
+
 .testimonial-arrow {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid rgba(209,213,219,0.9);
+  border: 1px solid rgba(209, 213, 219, 0.9);
   background: white;
   cursor: pointer;
   display: flex;
@@ -2150,18 +2600,21 @@ button {
   flex-shrink: 0;
   color: var(--text-soft);
   transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
+
 .testimonial-arrow:hover {
   background: #fef9c3;
   border-color: #fbbf24;
 }
+
 .testimonial-dots {
   display: flex;
   justify-content: center;
   gap: 6px;
   margin-top: 14px;
 }
+
 .testimonial-dot {
   width: 8px;
   height: 8px;
@@ -2170,11 +2623,13 @@ button {
   cursor: pointer;
   transition: all 0.3s;
 }
+
 .testimonial-dot.active {
   background: #f59e0b;
   width: 24px;
   border-radius: 999px;
 }
+
 .review-write-btn {
   display: flex;
   margin: 20px auto 0;
@@ -2186,6 +2641,7 @@ button {
 .faq-section {
   background: radial-gradient(circle at bottom, #eef2ff, #fdfcf9 60%);
 }
+
 .faq-container {
   max-width: 760px;
   margin: 0 auto;
@@ -2193,15 +2649,23 @@ button {
   flex-direction: column;
   gap: 10px;
 }
+
 .faq-item {
   border-radius: 16px;
-  border: 1px solid rgba(209,213,219,0.8);
+  border: 1px solid rgba(209, 213, 219, 0.8);
   background: white;
   overflow: hidden;
   transition: box-shadow 0.3s, border-color 0.3s;
 }
-.faq-item:hover { box-shadow: 0 4px 16px rgba(148,163,184,0.15); }
-.faq-item.open { border-color: rgba(250,204,21,0.6); }
+
+.faq-item:hover {
+  box-shadow: 0 4px 16px rgba(148, 163, 184, 0.15);
+}
+
+.faq-item.open {
+  border-color: rgba(250, 204, 21, 0.6);
+}
+
 .faq-question {
   width: 100%;
   display: flex;
@@ -2217,18 +2681,24 @@ button {
   color: var(--text-main);
   text-align: left;
 }
+
 .faq-icon {
   transition: transform 0.3s;
   color: #f59e0b;
   font-size: 0.8rem;
   flex-shrink: 0;
 }
-.faq-item.open .faq-icon { transform: rotate(180deg); }
+
+.faq-item.open .faq-icon {
+  transform: rotate(180deg);
+}
+
 .faq-answer {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s ease-out, padding 0.3s;
 }
+
 .faq-answer p {
   margin: 0;
   padding: 0 18px 14px;
@@ -2243,7 +2713,7 @@ button {
 .review-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15,23,42,0.5);
+  background: rgba(15, 23, 42, 0.5);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -2254,7 +2724,12 @@ button {
   transition: opacity 0.3s, visibility 0.3s;
   z-index: 52;
 }
-.review-backdrop.active { opacity: 1; visibility: visible; }
+
+.review-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
 .review-dialog {
   width: 100%;
   max-width: 480px;
@@ -2264,21 +2739,33 @@ button {
   position: relative;
   transform: translateY(20px);
   transition: transform 0.3s;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
-.review-backdrop.active .review-dialog { transform: translateY(0); }
+
+.review-backdrop.active .review-dialog {
+  transform: translateY(0);
+}
+
 .star-rating-input {
   display: flex;
   gap: 4px;
 }
+
 .star-input {
   font-size: 1.8rem;
   color: #d1d5db;
   cursor: pointer;
   transition: color 0.2s, transform 0.2s;
 }
-.star-input:hover { transform: scale(1.2); }
-.star-input.active { color: #f59e0b; }
+
+.star-input:hover {
+  transform: scale(1.2);
+}
+
+.star-input.active {
+  color: #f59e0b;
+}
+
 .review-success {
   margin-top: 12px;
   text-align: center;
@@ -2291,31 +2778,86 @@ button {
 
 /* Nav booking link highlight */
 .nav-booking-link {
-  background: linear-gradient(135deg, rgba(250,204,21,0.15), rgba(249,115,22,0.1));
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.15), rgba(249, 115, 22, 0.1));
   padding: 4px 12px !important;
   border-radius: 999px;
-  border: 1px solid rgba(250,204,21,0.4) !important;
+  border: 1px solid rgba(250, 204, 21, 0.4) !important;
 }
 
 /* ========================================
    RESPONSIVE
    ======================================== */
 @media (max-width: 768px) {
-  .datetime-layout { grid-template-columns: 1fr; gap: 16px; }
-  .booking-dialog { max-width: 95vw; }
-  .pooja-select-grid { grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); }
-  .booking-cta-steps { gap: 4px; }
-  .cta-step-arrow { display: none; }
-  .success-status-tracker { gap: 2px; }
-  .status-line-h { width: 20px; }
-  .testimonial-card { min-width: 260px; }
-}
-@media (max-width: 540px) {
-  .booking-progress { padding: 16px 10px 6px; gap: 0; }
-  .step-circle { width: 34px; height: 34px; font-size: 0.9rem; }
-  .progress-step span { font-size: 0.6rem; }
-  .booking-steps-container { padding: 12px 16px; }
-  .booking-nav { padding: 10px 16px 16px; }
-  .pooja-select-grid { grid-template-columns: 1fr 1fr; }
+  .datetime-layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .booking-dialog {
+    max-width: 95vw;
+  }
+
+  .pooja-select-grid {
+    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+  }
+
+  .booking-cta-steps {
+    gap: 4px;
+  }
+
+  .cta-step-arrow {
+    display: none;
+  }
+
+  .success-status-tracker {
+    gap: 2px;
+  }
+
+  .status-line-h {
+    width: 20px;
+  }
+
+  .testimonial-card {
+    min-width: 260px;
+  }
 }
 
+@media (max-width: 540px) {
+  .booking-progress {
+    padding: 16px 10px 6px;
+    gap: 0;
+  }
+
+  .step-circle {
+    width: 34px;
+    height: 34px;
+    font-size: 0.9rem;
+  }
+
+  .progress-step span {
+    font-size: 0.6rem;
+  }
+
+  .booking-steps-container {
+    padding: 12px 16px;
+  }
+
+  .booking-nav {
+    padding: 10px 16px 16px;
+  }
+
+  .pooja-select-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+/* For mobile responsive modal */
+@media (max-width: 768px) {
+  .modal-body {
+    grid-template-columns: 1fr;
+  }
+  .modal-media-panel {
+    min-height: 200px;
+    border-right: none;
+    border-bottom: 2px solid rgba(212, 160, 23, 0.3);
+  }
+}
